@@ -1,0 +1,71 @@
+/**:
+  ros__parameters:
+    # Parametri generali del nodo
+    use_sim_time: false           # Imposta a true se usi la simulazione (Gazebo, RViz con playback)
+
+    # Parametri del sensore
+    scan_topic: /laser           # Topic per le scansioni laser (sensor_msgs/LaserScan)
+    # pointcloud_topic: /livox/lidar # Topic per le point cloud (sensor_msgs/PointCloud2), usalo al posto di scan_topic se hai una telecamera 3D
+    scan_header_buffer_time: 1.0  # Tempo massimo per il buffer degli header delle scansioni
+    scan_queue_size: 10           # Dimensione della coda per le scansioni in ingresso
+    # min_range: 0.25
+
+    # Frame di riferimento
+    base_frame: base_link         # Frame base del robot (deve essere collegato al sensore via TF)
+    odom_frame: odom              # Frame dell'odometria (spesso generato da un nodo odometria)
+    map_frame: map                # Frame della mappa generata
+
+    # Parametri della mappa
+    map_start_pose: [0.0, 0.0, 0.0] # Posizione iniziale del robot nella mappa [x, y, yaw]
+    # map_resolution: 0.05          # Risoluzione della mappa in metri/cella (es. 0.05m = 5cm)
+    # map_size_x: 20.0              # Dimensione iniziale della mappa in X (metri)
+    # map_size_y: 20.0              # Dimensione iniziale della mappa in Y (metri)
+
+    # Parametri dell'algoritmo (Async SLAM)
+    minimum_time_between_scans: 0.5 # Tempo minimo tra due scansioni per l'elaborazione (riduce carico CPU)
+    minimum_travel_distance: 0.2  # Distanza minima di spostamento per un aggiornamento della mappa
+    minimum_travel_angle: 0.1     # Angolo minimo di rotazione per un aggiornamento della mappa
+
+    # Parametri di ottimizzazione del grafo (Graph Optimization)
+    max_icp_iterations: 100       # Iterazioni massime per l'ICP (Iterative Closest Point)
+    max_keyframes_to_try: 50      # Numero massimo di keyframe da provare per il loop closure
+    loop_search_maximum_distance: 5.0 # Distanza massima per la ricerca di loop closure
+    loop_search_minimum_distance: 0.5 # Distanza minima per la ricerca di loop closure
+    loop_search_space: 1.0        # Spazio di ricerca per il loop closure (in metri)
+    loop_closure_threshold: 0.7   # Soglia di confidenza per accettare un loop closure
+
+    # Filtri per le scansioni (opzionale)
+    # filter_parameter_active: true # Abilita il filtro delle scansioni
+    # filter_size_a: 0.5            # Parametro del filtro A
+    # filter_size_b: 0.5            # Parametro del filtro B
+
+    # Parametri di debug/visualizzazione
+    debug_map_output: false       # Se true, salva la mappa in immagini per debug
+    debug_map_resolution: 0.05    # Risoluzione delle mappe di debug
+    output_directory: /tmp/slam_toolbox_debug # Directory per le mappe di debug
+
+    # Parametri per l'algoritmo di corrispondenza (Matcher)
+    # Questi dipendono dal backend scelto (es. ceres, g2o)
+    # L'Async SLAM usa di default Ceres Solver, e questi parametri sono spesso specifici del backend.
+    # Ad esempio:
+    #ceres_solver_options.max_num_iterations: 100
+    #ceres_solver_options.function_tolerance: 1e-6
+    #ceres_solver_options.gradient_tolerance: 1e-8
+
+    # Parametri specifici dell'Async SLAM (Node-specific)
+    # throttle_scans: false          # Limita la frequenza di elaborazione delle scansioni (utile per risorse limitate)
+    max_keyframes_per_second: 1.0  # Numero massimo di keyframe al secondo (se throttle_scans è true)
+
+    # Parametri di salvataggio/caricamento mappa
+    # map_file_name: /home/unitree/go2_ws1/map/map                  
+    save_map_on_shutdown: true   # Salva la mappa alla chiusura del nodo
+    load_map_on_startup: true    # Carica una mappa all'avvio del nodo
+    use_map_saver: true
+    
+    # transform_publish_period: 0
+    # distance_variance_penalty: 0.5
+
+    # min_laser_range: 0.2
+    # max_laser_range: 30.0
+
+    use_lifecycle: true
