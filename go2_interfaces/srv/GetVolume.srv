@@ -1,0 +1,6 @@
+# Get the volume of the robot speaker [0 - 10]
+
+---
+bool success
+string message
+int32 volume

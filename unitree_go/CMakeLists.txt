@@ -1,0 +1,66 @@
+cmake_minimum_required(VERSION 3.5)
+project(unitree_go)
+
+# Default to C99
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
+
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
+
+find_package(rosidl_default_generators REQUIRED)
+find_package(rosidl_generator_dds_idl REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+        "msg/AudioData.msg"
+        "msg/BmsCmd.msg"
+        "msg/BmsState.msg"
+        "msg/Error.msg"
+        "msg/Go2FrontVideoData.msg"
+        "msg/HeightMap.msg"
+        "msg/IMUState.msg"
+        "msg/InterfaceConfig.msg"
+        "msg/LidarState.msg"
+        "msg/LowCmd.msg"
+        "msg/LowState.msg"
+        "msg/MotorCmd.msg"
+        "msg/MotorCmds.msg"
+        "msg/MotorState.msg"
+        "msg/MotorStates.msg"
+        "msg/PathPoint.msg"
+        "msg/Req.msg"
+        "msg/Res.msg"
+        "msg/SportModeCmd.msg"
+        "msg/SportModeState.msg"
+        "msg/TimeSpec.msg"
+        "msg/UwbState.msg"
+        "msg/UwbSwitch.msg"
+        "msg/VoxelMapCompressed.msg"
+        "msg/VoxelHeightMapState.msg"
+        "msg/WirelessController.msg"
+)
+
+rosidl_generate_dds_interfaces(
+  ${rosidl_generate_interfaces_TARGET}__dds_connext_idl
+  IDL_TUPLES ${rosidl_generate_interfaces_IDL_TUPLES}
+  OUTPUT_SUBFOLDERS "dds_connext"
+)
+add_dependencies(
+  ${PROJECT_NAME}
+  ${PROJECT_NAME}__dds_connext_idl
+)
+
+ament_package()

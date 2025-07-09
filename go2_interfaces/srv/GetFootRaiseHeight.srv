@@ -1,0 +1,6 @@
+# Get the relative height of foot lift during movement
+
+---
+bool success
+string message
+float32 height

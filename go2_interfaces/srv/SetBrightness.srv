@@ -1,0 +1,7 @@
+# Set brightness.
+
+int32 brightness
+
+---
+bool success
+string message

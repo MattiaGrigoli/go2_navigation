@@ -1,0 +1,6 @@
+# Get switch obstacle avoidance
+
+---
+bool success
+string message
+int32 enable
