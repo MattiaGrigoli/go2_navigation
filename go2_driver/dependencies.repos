@@ -1,0 +1,13 @@
+repositories:
+  go2_interfaces:
+    type: git
+    url: https://github.com/Unitree-Go2-Robot/go2_interfaces.git
+    version: humble
+  unitree_api:
+    type: git
+    url: https://github.com/Unitree-Go2-Robot/unitree_api.git
+    version: main
+  unitree_go:
+    type: git
+    url: https://github.com/Unitree-Go2-Robot/unitree_go.git
+    version: main
