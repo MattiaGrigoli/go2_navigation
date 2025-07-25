@@ -89,15 +89,15 @@ def generate_launch_description():
         parameters=[{
             'target_frame': 'livox_frame',       
             'transform_tolerance': 0.01,
-            'min_height': 0.15,            
-            'max_height': 1.0,             
+            'min_height': 0.10,            
+            'max_height': 1.35,             
             'angle_min': -3.14,            
             'angle_max': 3.14,             
             'angle_increment': 0.0087,     
             'range_min': 0.1,              
             'range_max': 100.0,            
             'use_intensities': False,      
-            'concurrency_level': 1,        
+            'concurrency_level': 2,        
             'use_sim_time': LaunchConfiguration('use_sim_time', default='false') 
         }],
         output='screen'
