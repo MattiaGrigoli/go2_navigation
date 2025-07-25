@@ -77,27 +77,28 @@ def generate_launch_description():
         # condition=IfCondition(PythonExpression([rviz]))
     )
 
+    # for mapping
     pointcloud_to_laserscan_node = Node(
         package='pointcloud_to_laserscan',
         executable='pointcloud_to_laserscan_node',
         name='pointcloud_to_laserscan',
         remappings=[
-            ('cloud_in', '/livox/lidar'),  # Topic della point cloud in ingresso dal Livox
-            ('scan', '/laser')              # Topic del laser scan in uscita
+            ('cloud_in', '/livox/lidar'),  
+            ('scan', '/laser')              
         ],
         parameters=[{
-            'target_frame': 'livox_frame',       # Frame del sensore laser simulato (deve essere trasformabile rispetto al base_link)
+            'target_frame': 'livox_frame',       
             'transform_tolerance': 0.01,
-            'min_height': 0.15,            # Altezza minima dei punti da considerare
-            'max_height': 1.0,             # Altezza massima dei punti da considerare
-            'angle_min': -3.14,            # Angolo minimo del laser scan (rad) (-pi)
-            'angle_max': 3.14,             # Angolo massimo del laser scan (rad) (pi)
-            'angle_increment': 0.0087,     # Incremento angolare del laser scan (rad) (~0.5 gradi)
-            'range_min': 0.1,              # Distanza minima dei raggi laser
-            'range_max': 100.0,            # Distanza massima dei raggi laser
-            'use_intensities': False,      # Se usare le intensità della point cloud
-            'concurrency_level': 1,        # Livello di concorrenza per l'elaborazione
-            'use_sim_time': LaunchConfiguration('use_sim_time', default='false') # Aggiungi questo se hai un use_sim_time globale
+            'min_height': 0.15,            
+            'max_height': 1.0,             
+            'angle_min': -3.14,            
+            'angle_max': 3.14,             
+            'angle_increment': 0.0087,     
+            'range_min': 0.1,              
+            'range_max': 100.0,            
+            'use_intensities': False,      
+            'concurrency_level': 1,        
+            'use_sim_time': LaunchConfiguration('use_sim_time', default='false') 
         }],
         output='screen'
     )
@@ -105,19 +106,19 @@ def generate_launch_description():
     slam_toolbox_config_path = os.path.join(
         get_package_share_directory('go2_navigation'),
         'config',
-        'slam_config.yaml' # Questo è un file di configurazione di esempio fornito da slam_toolbox
+        'slam_config.yaml' 
     )
 
     slam_toolbox_node = Node(
         package='slam_toolbox',
-        executable='async_slam_toolbox_node', # Usa async_slam_toolbox_node per una migliore reattività
+        executable='async_slam_toolbox_node', 
         name='slam_toolbox',
         output='screen',
         parameters=[
             slam_toolbox_config_path,
-            {'scan_topic': '/laser'}, # Esempio: topic della point cloud
+            {'scan_topic': '/laser'}, 
             {'use_sim_time': 'false'}, 
-            {'map_frame': 'map'},       # Assicurati che i frame siano consistenti
+            {'map_frame': 'map'},       
             {'odom_frame': 'odom'},
             {'base_frame': 'base_link'},
         ],
@@ -130,9 +131,9 @@ def generate_launch_description():
             get_package_share_directory('nav2_bringup'),
             'launch/'), 'navigation_launch.py']),
         launch_arguments={
-            'params_file': nav2_params_file, # <--- Qui passiamo il tuo file di configurazione
-            'use_sim_time': 'false'    # Passa use_sim_time anche a Nav2
-            # 'autostart': 'true'              # Generalmente utile per Nav2
+            'params_file': nav2_params_file, 
+            'use_sim_time': 'false'    
+            # 'autostart': 'true'              
         }.items()
         # condition=IfCondition(PythonExpression([rviz]))
     )
